@@ -32,6 +32,7 @@ PLAT_DISTRO_OVERRIDES=(
   meta-fuji:zeus
   meta-minipack:zeus
   meta-wedge400:zeus
+  meta-agc032a:zeus
 # warrior platforms (pending upgrade)
 #   -- none --
 # Legacy platforms pending kernel upgrade
