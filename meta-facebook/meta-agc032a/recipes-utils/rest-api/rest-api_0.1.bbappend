@@ -18,17 +18,20 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 SRC_URI += " \
-    file://rest-api-1/rest_feutil.py \
-    file://rest-api-1/rest_firmware_info.py \
-    file://rest-api-1/rest_presence.py \
-    file://rest-api-1/rest_seutil.py \
-    file://rest-api-1/rest_sensors.py \
-    file://rest-api-1/rest_switch_reset.py \
-    file://rest-api-1/rest_vddcore.py \
-    file://rest-api-1/rest_helper.py \
-    file://rest-api-1/rest_utils.py \
-    file://rest-api-1/common_setup_routes.py \
-    file://rest-api-1/common_endpoint.py \
+    file://rest_feutil.py \
+    file://rest_firmware_info.py \
+    file://rest_presence.py \
+    file://rest_seutil.py \
+    file://rest_sensors.py \
+    file://rest_switch_reset.py \
+    file://rest_vddcore.py \
+    file://rest_helper.py \
+    file://rest_utils.py \
+    file://common_setup_routes.py \
+    file://common_endpoint.py \
+    file://common_auth.py \
+    file://common_middlewares.py \
+    file://run_rest \
 "
 
 binfiles1 += " \
@@ -43,4 +46,6 @@ binfiles1 += " \
     rest_utils.py \
     common_setup_routes.py \
     common_endpoint.py \
+    common_auth.py \
+    common_middlewares.py \
 "

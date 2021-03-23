@@ -45,7 +45,7 @@
 #include <openbmc/sensor-correction.h>
 #include <openbmc/misc-utils.h>
 #include <facebook/wedge_eeprom.h>
-#include <openbmc/delta_lib.h>
+#include <openbmc/shim_lib.h>
 #include "pal_sensors.h"
 #include "pal.h"
 
@@ -1648,7 +1648,7 @@ psu_sensor_read(uint8_t sensor_num, float *value) {
   switch(sensor_num) {
     case PSU1_SENSOR_IN_VOLT:
       // read_attr(PSU1_DEVICE, "read_vin", value);
-      ret = delta_get_pwr_volt(0, SNR_POWERSUPPLY, 0, value);
+      ret = shim_get_pwr_volt(0, SNR_POWERSUPPLY, 0, value);
       break;
     case PSU1_SENSOR_OUT_VOLT:
       ret = read_attr(PSU1_DEVICE, "read_vout", value);
@@ -1676,7 +1676,7 @@ psu_sensor_read(uint8_t sensor_num, float *value) {
       break;
     case PSU2_SENSOR_IN_VOLT:
       // ret = read_attr(PSU2_DEVICE, "read_vin", value);
-      ret = delta_get_pwr_volt(0, SNR_POWERSUPPLY, 1, value);
+      ret = shim_get_pwr_volt(0, SNR_POWERSUPPLY, 1, value);
       break;
     case PSU2_SENSOR_OUT_VOLT:
       ret = read_attr(PSU2_DEVICE, "read_vout", value);
@@ -3412,10 +3412,8 @@ pal_get_boot_order(uint8_t slot, uint8_t *req_data, uint8_t *boot, uint8_t *res_
 
 int
 pal_set_boot_order(uint8_t slot, uint8_t *boot, uint8_t *res_data, uint8_t *res_len) {
-  int i, j, network_dev = 0;
-  char key[MAX_KEY_LEN] = {0};
+  int i, j, offset, network_dev = 0;
   char str[MAX_VALUE_LEN] = {0};
-  char tstr[10] = {0};
   enum {
     BOOT_DEVICE_IPV4 = 0x1,
     BOOT_DEVICE_IPV6 = 0x9,
@@ -3423,7 +3421,7 @@ pal_set_boot_order(uint8_t slot, uint8_t *boot, uint8_t *res_data, uint8_t *res_
 
   *res_len = 0;
 
-  for (i = 0; i < SIZE_BOOT_ORDER; i++) {
+  for (i = offset = 0; i < SIZE_BOOT_ORDER && offset < sizeof(str); i++) {
     if (i > 0) {  // byte[0] is boot mode, byte[1:5] are boot order
       for (j = i+1; j < SIZE_BOOT_ORDER; j++) {
         if (boot[i] == boot[j])
@@ -3437,19 +3435,15 @@ pal_set_boot_order(uint8_t slot, uint8_t *boot, uint8_t *res_data, uint8_t *res_
         network_dev++;
     }
 
-    snprintf(tstr, 3, "%02x", boot[i]);
-    strncat(str, tstr, 3);
+    offset += snprintf(str + offset, sizeof(str) - offset, "%02x", boot[i]);
   }
 
   // not allow having more than 1 network boot device in the boot order
-  if (network_dev > 1){
-    OBMC_ERROR(-1, "Network device are %d",network_dev);
+  if (network_dev > 1)
     return CC_INVALID_PARAM;
-  }
-  OBMC_WARN("pal_set_boot_order: %s",str);
 
-  sprintf(key, "slot%d_boot_order", slot);
-  return pal_set_key_value(key, str);
+  return pal_set_key_value("server_boot_order", str);
+
 }
 
 int pal_get_bmc_ipmb_slave_addr(uint16_t *slave_addr, uint8_t bus_id)

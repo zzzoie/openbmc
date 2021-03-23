@@ -23,7 +23,7 @@ SRC_URI += "file://setup-sensord.sh \
 
 S = "${WORKDIR}"
 
-DEPENDS_append = "update-rc.d-native"
+DEPENDS_append = " update-rc.d-native"
 
 pkgdir = "sensor-mon"
 

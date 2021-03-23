@@ -1,6 +1,6 @@
 # Copyright 2020-present Delta Electronics, Inc. All Rights Reserved.
 
-inherit kernel_fitimage
+require recipes-core/images/fbobmc-image-meta.inc
 
 require recipes-core/images/fb-openbmc-image.bb
 
@@ -16,7 +16,7 @@ IMAGE_INSTALL += " \
   cpldupdate \
   cpldupdate-jtag \
   crashdump \
-  delta-lib \
+  shim-lib \
   e2fsprogs \
   fscd \
   fan-util \
@@ -47,5 +47,7 @@ IMAGE_INSTALL += " \
   wedge-eeprom \
   weutil-dhcp-id \
   "
+
+IMAGE_INSTALL_remove += "libaggregate-sensor-ptest"
 
 SERIAL_CONSOLES += "115200;ttyS4"

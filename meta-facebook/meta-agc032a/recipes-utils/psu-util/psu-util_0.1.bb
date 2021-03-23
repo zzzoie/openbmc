@@ -14,7 +14,7 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301 USA
-
+PTEST_ENABLED = "0"
 SUMMARY = "PSU Utility"
 DESCRIPTION = "Utility to update PSU and get PSU EEPROM."
 SECTION = "base"
@@ -30,8 +30,8 @@ S = "${WORKDIR}/utils"
 
 LDFLAGS = "-lfruid -lpal -lagc032a-psu "
 
-DEPENDS += "libagc032a-psu"
-RDEPENDS_${PN} += "libagc032a-psu"
+DEPENDS += "libagc032a-psu libpal"
+RDEPENDS_${PN} += "libagc032a-psu libpal"
 
 do_install() {
   install -d ${D}${bindir}

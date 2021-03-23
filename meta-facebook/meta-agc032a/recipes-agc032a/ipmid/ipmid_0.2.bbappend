@@ -14,7 +14,7 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301 USA
-
+PTEST_ENABLED = "0"
 SUMMARY = "ipmi daemon for WEDGE400"
 DESCRIPTION = "ipmi daemon for Wedge400, uses LPC bus"
 SECTION = "base"
@@ -25,7 +25,7 @@ LIC_FILES_CHKSUM = "file://ipmid.c;beginline=8;endline=20;md5=da35978751a9d71b73
 LDFLAGS_append = " -lwedge_eeprom -lfruid -lpal -lobmc-i2c -llog"
 
 DEPENDS_append = " libwedge-eeprom libpal libipmi libfruid libobmc-i2c liblog update-rc.d-native libgpio"
-RDEPENDS_${PN} += " libwedge-eeprom libpal libipmi libfruid libobmc-i2c liblog libgpio"
+RDEPENDS_${PN} += " libwedge-eeprom libpal libipmi libfruid libobmc-i2c liblog libgpio bash"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 SRC_URI += "file://fruid.c \
