@@ -16,7 +16,6 @@ IMAGE_INSTALL += " \
   cpldupdate \
   cpldupdate-jtag \
   crashdump \
-  shim-lib \
   e2fsprogs \
   fscd \
   fan-util \
@@ -33,7 +32,7 @@ IMAGE_INSTALL += " \
   libfruid \
   libpldm \
   lldp-util \
-  log-util \
+  log-util-v2 \
   libncsi \
   ncsi-util \
   ncsid \

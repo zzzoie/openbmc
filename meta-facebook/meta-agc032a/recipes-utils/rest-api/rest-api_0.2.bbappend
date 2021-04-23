@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-#
-# Copyright 2014-present Facebook. All Rights Reserved.
+# Copyright 2015-present Facebook. All Rights Reserved.
 #
 # This program file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the
@@ -16,15 +14,7 @@
 # Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor,
 # Boston, MA 02110-1301 USA
-#
-from typing import Dict
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+SRC_URI += "file://plat_tree.py \
+          "
 
-from aiohttp import web
-from board_setup_routes import setup_board_routes
-from common_setup_routes import setup_common_routes
-from redfish_setup_routes import setup_redfish_routes
-
-def setup_plat_routes(app: web.Application, config: Dict):
-    setup_common_routes(app)
-    setup_board_routes(app)
-    setup_redfish_routes(app)

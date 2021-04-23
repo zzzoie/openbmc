@@ -45,7 +45,6 @@
 #include <openbmc/sensor-correction.h>
 #include <openbmc/misc-utils.h>
 #include <facebook/wedge_eeprom.h>
-#include <openbmc/shim_lib.h>
 #include "pal_sensors.h"
 #include "pal.h"
 
@@ -1647,8 +1646,7 @@ psu_sensor_read(uint8_t sensor_num, float *value) {
 
   switch(sensor_num) {
     case PSU1_SENSOR_IN_VOLT:
-      // read_attr(PSU1_DEVICE, "read_vin", value);
-      ret = shim_get_pwr_volt(0, SNR_POWERSUPPLY, 0, value);
+      ret = read_attr(PSU1_DEVICE, "read_vin", value);
       break;
     case PSU1_SENSOR_OUT_VOLT:
       ret = read_attr(PSU1_DEVICE, "read_vout", value);
@@ -1675,8 +1673,7 @@ psu_sensor_read(uint8_t sensor_num, float *value) {
       ret = read_attr(PSU1_DEVICE, "read_temp2", value);
       break;
     case PSU2_SENSOR_IN_VOLT:
-      // ret = read_attr(PSU2_DEVICE, "read_vin", value);
-      ret = shim_get_pwr_volt(0, SNR_POWERSUPPLY, 1, value);
+      ret = read_attr(PSU2_DEVICE, "read_vin", value);
       break;
     case PSU2_SENSOR_OUT_VOLT:
       ret = read_attr(PSU2_DEVICE, "read_vout", value);
